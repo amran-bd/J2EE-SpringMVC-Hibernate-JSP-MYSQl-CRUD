@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- was: <?xml version="1.0" encoding="UTF-8"?> -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd 
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <context:component-scan base-package="com.test" />  
+    <context:property-placeholder location="classpath:database.properties" />  
+    <mvc:annotation-driven  />  
+  
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">  
+        <property name="driverClassName" value="${database.driver}" />  
+        <property name="url" value="${database.url}" />  
+        <property name="username" value="${database.user}" />  
+        <property name="password" value="${database.password}" />  
+    </bean>  
+  
+    <!--    <bean id="sessionFactory"  
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">  
+        <property name="dataSource" ref="dataSource" />  
+                <property name="annotatedClasses">    
+            <list>    
+                <value>com.beingjavaguys.domain.Employee</value>    
+            </list>    
+        </property>   
+        <property name="hibernateProperties">  
+            <props>  
+                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>  
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>  
+            </props>  
+        </property>  
+    </bean>  -->
+    
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation">
+            <value>classpath:hibernate.cfg.xml</value>
+        </property>
+        <property name="hibernateProperties">  
+            <props> 
+                <prop key="current_session_context_class">thread</prop>  
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="fomat_sql">true</prop>  
+                <prop key="hibernate.hbm2ddl.auto">false</prop>
+                <prop key="hibernate.connection.SetBigStringTryBlob">true</prop>
+                <prop key="hibernate.connection.autocommit">true</prop> 
+                <prop key="hibername.jdbc.batch_size">0</prop> 
+            </props>  
+        </property>  
+    </bean>
+    
+    <bean id = "transactionManager" class = "org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name = "sessionFactory" ref = "sessionFactory" />
+    </bean>
+    
+    <tx:annotation-driven transaction-manager="transactionManager" />
+    <!--    <bean id="txManager"  
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">  
+        <property name="sessionFactory" ref="sessionFactory" />  
+    </bean>  -->
+  
+    <!--    <bean id="persistenceExceptionTranslationPostProcessor"  
+    class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />  -->
+    
+    <bean  
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+        <property name="prefix">  
+            <value>/WEB-INF/jsp/</value>  
+        </property>  
+        <property name="suffix">  
+            <value>.jsp</value>  
+        </property>  
+    </bean>  
+  
+  
+    <bean id="productDao" class="com.test.dao.ProductDaoImpl">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory"/>
+        </property>
+    </bean>    
+    
+    <bean id="productService" class="com.test.service.ProductServiceImpl" />  
+  
+</beans>  

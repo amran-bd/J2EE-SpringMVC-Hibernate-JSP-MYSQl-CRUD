@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 3, 2015 9:27:12 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.test.model.Product" table="PRODUCT" schema="HR" optimistic-lock="version">
+        <id name="productId" type="java.lang.Long">
+            <column name="PRODUCT_ID" precision="11" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <property name="manufacturedDate" type="java.sql.Timestamp">
+            <column name="MANUFACTURED_DATE" />
+        </property>
+        <property name="price" type="java.lang.Long">
+            <column name="PRICE" precision="10" scale="0" />
+        </property>
+        <property name="productCode" type="string">
+            <column name="PRODUCT_CODE" />
+        </property>
+        <property name="productName" type="string">
+            <column name="PRODUCT_NAME" />
+        </property>
+        <property name="vat" type="java.lang.Long">
+            <column name="VAT" precision="10" scale="0" />
+        </property>
+        <property name="brand" type="string">
+            <column name="BRAND" />
+        </property>
+        <property name="madeIn" type="string">
+            <column name="MADE_IN" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/SHCrud">
+    <Resource 
+                  type="javax.sql.DataSource"
+                  name="jdbc/agentbankdb" 
+                  factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" 
+                  driverClassName="oracle.jdbc.OracleDriver"
+                  url="jdbc:oracle:thin:@173.45.81.178:1521:orcl" 
+                  username="hr"
+                  password="hr"
+                  initialSize="0"
+                  maxActive="1000" 
+                  timeBetweenEvictionRunsMillis="30000"
+                  minEvictableIdleTimeMillis="60000"
+                  testOnBorrow="true"
+                  validationQuery="SELECT 1 FROM DUAL" 
+                  validationInterval="30000" 
+                  removeAbandoned="true"
+                  removeAbandonedTimeout="60" 
+                  logAbandoned="true" 
+                  abandonWhenPercentageFull="60"
+                  jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ResetAbandonedTimer"/>
+</Context>
